@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>ZaanCiterr | OB52 Ultimate Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at 20% 30%, #0a0718, #02010a);
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: pulseGlow 8s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ========== MENU HAMBURGER ========== */
+    .menu-container {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 1001;
+    }
+
+    .hamburger {
+      width: 48px;
+      height: 48px;
+      background: rgba(15, 12, 35, 0.9);
+      backdrop-filter: blur(12px);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .hamburger:hover {
+      transform: scale(1.05);
+      border-color: #a855f7;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: white;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    /* Sidebar Menu */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 280px;
+      height: 100%;
+      background: rgba(10, 8, 25, 0.98);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(139, 92, 246, 0.3);
+      z-index: 1002;
+      transition: left 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      padding: 2rem 1rem;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .sidebar-header h3 {
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, #fff, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .menu-item i {
+      width: 24px;
+      font-size: 1.2rem;
+    }
+
+    .menu-item:hover {
+      background: rgba(139, 92, 246, 0.2);
+      color: white;
+    }
+
+    .menu-item.active {
+      background: rgba(139, 92, 246, 0.3);
+      border-left: 3px solid #a855f7;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1001;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    /* ========== PAGES ========== */
+    .page {
+      display: none;
+      animation: pageFade 0.4s ease;
+    }
+
+    .page.active-page {
+      display: block;
+    }
+
+    @keyframes pageFade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Premium Header */
+    .premium-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .super-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(139, 92, 246, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 0.5rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Hero Image */
+    .hero-premium {
+      max-width: 300px;
+      margin: 0 auto 2rem;
+      aspect-ratio: 1 / 1;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.3);
+    }
+
+    .hero-premium img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Info Card (untuk halaman WA/Telegram) */
+    .info-card {
+      background: rgba(15, 12, 35, 0.6);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 2rem;
+      margin-top: 1rem;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      text-align: center;
+    }
+
+    .info-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .info-link {
+      display: inline-block;
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      padding: 0.8rem 2rem;
+      border-radius: 100px;
+      color: white;
+      text-decoration: none;
+      margin: 1rem 0;
+      transition: all 0.2s;
+    }
+
+    .info-link:hover {
+      transform: scale(1.02);
+    }
+
+    .info-number {
+      font-size: 1.2rem;
+      font-weight: 600;
+      background: rgba(0,0,0,0.3);
+      padding: 0.5rem;
+      border-radius: 100px;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    /* Product Grid */
+    .product-grid-premium {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card-premium {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 1.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .product-card-premium:hover {
+      transform: translateY(-6px);
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+      border-color: rgba(139, 92, 246, 0.5);
+    }
+
+    .product-badge-premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(139, 92, 246, 0.2);
+      padding: 0.25rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .product-name-premium {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price-premium {
+      font-size: 1.3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #c084fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .rating-premium {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: #fbbf24;
+      margin-top: 0.5rem;
+    }
+
+    .category-premium {
+      background: rgba(15, 12, 35, 0.6);
+      backdrop-filter: blur(12px);
+      border-radius: 36px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-premium {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      h1 { font-size: 2rem; }
+      .hero-premium { max-width: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MENU HAMBURGER -->
+<div class="menu-container">
+  <div class="hamburger" id="hamburgerBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h3>ZaanCiterr</h3>
+    <p style="font-size: 0.7rem; opacity: 0.7;">Menu</p>
+  </div>
+  <div class="menu-item" data-page="home">
+    <i class="fas fa-store"></i>
+    <span>Home</span>
+  </div>
+  <div class="menu-item" data-page="whatsapp">
+    <i class="fab fa-whatsapp"></i>
+    <span>WhatsApp</span>
+  </div>
+  <div class="menu-item" data-page="telegram">
+    <i class="fab fa-telegram"></i>
+    <span>Telegram</span>
+  </div>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<div class="container">
+  <!-- PAGE HOME -->
+  <div id="homePage" class="page active-page">
+    <div class="premium-header">
+      <div class="super-badge">
+        <i class="fas fa-bolt"></i>
+        <span>ADMIN FASTRESS • SLOW RES = ADA KESIBUKAN</span>
+      </div>
+      <h1>ZaanCiterr</h1>
+      <div class="tagline">OB52 ULTIMATE STORE — PREMIUM CONFIGURATION</div>
+    </div>
+
+    <div class="hero-premium">
+      <img src="https://files.catbox.moe/321av5.jpg" alt="Sasuke ZaanCiterr">
+    </div>
+
+    <div id="productListRoot"></div>
+  </div>
+
+  <!-- PAGE WHATSAPP -->
+  <div id="whatsappPage" class="page">
+    <div class="premium-header">
+      <h1>WhatsApp</h1>
+      <div class="tagline">Official Channel & Owner</div>
+    </div>
+
+    <div class="hero-premium">
+      <img src="https://files.catbox.moe/321av5.jpg" alt="Sasuke ZaanCiterr">
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon">
+        <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+      </div>
+      <div class="info-title">Channel WhatsApp ZaanCiter</div>
+      <p>Update file, config, dan info terbaru</p>
+      <a href="https://whatsapp.com/channel/0029VbCBaVU4inot7blhEM2n" target="_blank" class="info-link">
+        <i class="fab fa-whatsapp"></i> Buka Channel
+      </a>
+      
+      <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(139,92,246,0.2);">
+        <div class="info-icon" style="font-size: 2rem;">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="info-title">Nomor Owner</div>
+        <div class="info-number">
+          <i class="fab fa-whatsapp"></i> 082392368932
+        </div>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem; opacity: 0.7;">Admin Fastress • Buka 24 Jam</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE TELEGRAM -->
+  <div id="telegramPage" class="page">
+    <div class="premium-header">
+      <h1>Telegram</h1>
+      <div class="tagline">ZaanCiterr Official</div>
+    </div>
+
+    <div class="hero-premium">
+      <img src="https://files.catbox.moe/321av5.jpg" alt="Sasuke ZaanCiterr">
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon">
+        <i class="fab fa-telegram" style="color: #26A5E4;"></i>
+      </div>
+      <div class="info-title">Telegram ZaanCiter</div>
+      <p>Group diskusi, update produk, dan support</p>
+      <a href="https://t.me/zaanciterr" target="_blank" class="info-link">
+        <i class="fab fa-telegram"></i> Buka Telegram
+      </a>
+      <div style="margin-top: 1rem;">
+        <p style="font-size: 0.8rem;">Username: <strong>@zaanciterr</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-premium">
+    <i class="fas fa-shield-alt"></i> DANA & GOPAY : 082392368932 | QRIS Coming Soon | Full Garansi
+  </div>
+</div>
+
+<!-- MODAL ORDER (sama seperti sebelumnya) -->
+<div id="orderModal" class="modal-premium" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(20px); justify-content:center; align-items:center; z-index:1100;">
+  <div class="modal-content-premium" style="background:rgba(10,8,25,0.98); border-radius:48px; max-width:520px; width:90%; padding:2rem; border:1px solid rgba(139,92,246,0.3);">
+    <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:1.5rem;">
+      <h3><i class="fas fa-shopping-cart"></i> Order Product</h3>
+      <span class="close-modal" style="font-size:28px; cursor:pointer;">&times;</span>
+    </div>
+    <p id="modalProductName" style="color:#c084fc;"></p>
+    <p id="modalProductPrice" style="font-size:1.8rem; font-weight:800;"></p>
+    <input type="text" id="tiktokName" class="input-premium" placeholder="TikTok Username" style="width:100%; padding:1rem; background:rgba(255,255,255,0.05); border-radius:28px; margin-bottom:1rem; color:white;">
+    <input type="tel" id="waNumber" class="input-premium" placeholder="WhatsApp Number" style="width:100%; padding:1rem; background:rgba(255,255,255,0.05); border-radius:28px; margin-bottom:1rem; color:white;">
+    <input type="email" id="emailBuyer" class="input-premium" placeholder="Email" style="width:100%; padding:1rem; background:rgba(255,255,255,0.05); border-radius:28px; margin-bottom:1rem; color:white;">
+    <div class="file-upload-premium" id="uploadArea" style="background:rgba(255,255,255,0.05); border:1px dashed #a855f7; border-radius:28px; padding:1rem; text-align:center; cursor:pointer;">
+      <i class="fas fa-upload"></i> Upload Payment Screenshot
+      <input type="file" id="proofImage" accept="image/*" style="display:none;">
+    </div>
+    <div id="previewContainer" style="width:100%; aspect-ratio:1/1; max-width:160px; margin:1rem auto; border-radius:20px; overflow:hidden; display:none;">
+      <img id="previewImg" style="width:100%; height:100%; object-fit:cover;">
+    </div>
+    <div class="payment-grid" style="display:flex; gap:1rem; margin:1rem 0;">
+      <div class="payment-chip" data-method="DANA" style="background:rgba(255,255,255,0.05); padding:0.5rem 1.2rem; border-radius:100px; cursor:pointer;">DANA</div>
+      <div class="payment-chip" data-method="GOPAY" style="background:rgba(255,255,255,0.05); padding:0.5rem 1.2rem; border-radius:100px; cursor:pointer;">GOPAY</div>
+      <div style="opacity:0.4; padding:0.5rem 1.2rem;">QRIS (CS)</div>
+    </div>
+    <div id="nomorDisplay" style="background:rgba(0,0,0,0.3); padding:0.7rem; border-radius:100px; text-align:center;">DANA: 082392368932</div>
+    <button class="btn-premium" id="sendOrderBtn" style="width:100%; padding:1rem; background:linear-gradient(135deg,#a855f7,#7c3aed); border-radius:100px; margin-top:1rem;">Send to Telegram</button>
+  </div>
+</div>
+
+<!-- MODAL RATING -->
+<div id="ratingModal" class="modal-premium" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(20px); justify-content:center; align-items:center; z-index:1100;">
+  <div class="modal-content-premium" style="background:rgba(10,8,25,0.98); border-radius:48px; max-width:460px; width:90%; padding:2rem;">
+    <div class="modal-header" style="display:flex; justify-content:space-between;">
+      <h3>Rate Product</h3>
+      <span class="close-rating-modal" style="font-size:28px; cursor:pointer;">&times;</span>
+    </div>
+    <p id="ratingProductName"></p>
+    <div class="rating-star" id="starRating" style="display:flex; gap:0.5rem; font-size:2rem; justify-content:center; margin:1rem 0;">
+      <span data-value="1">☆</span><span data-value="2">☆</span><span data-value="3">☆</span><span data-value="4">☆</span><span data-value="5">☆</span>
+    </div>
+    <textarea id="reviewText" rows="3" placeholder="Write your review..." style="width:100%; padding:1rem; background:rgba(255,255,255,0.05); border-radius:28px; color:white;"></textarea>
+    <input type="text" id="reviewerName" placeholder="Your name" value="BUYER ZAANCITER" style="width:100%; padding:1rem; background:rgba(255,255,255,0.05); border-radius:28px; margin-top:1rem; color:white;">
+    <button id="submitRatingBtn" style="width:100%; padding:1rem; background:linear-gradient(135deg,#a855f7,#7c3aed); border-radius:100px; margin-top:1rem;">Submit Rating</button>
+    <div id="reviewList" style="max-height:250px; overflow-y:auto; margin-top:1rem;"></div>
+  </div>
+</div>
+
+<script>
+  // ========== MENU SYSTEM ==========
+  const hamburger = document.getElementById('hamburgerBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuItems = document.querySelectorAll('.menu-item');
+  const pages = document.querySelectorAll('.page');
+
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+
+  function openMenu() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  }
+
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  function switchPage(pageId) {
+    pages.forEach(page => page.classList.remove('active-page'));
+    document.getElementById(pageId + 'Page').classList.add('active-page');
+    menuItems.forEach(item => {
+      if (item.dataset.page === pageId) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+    closeMenu();
+  }
+
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const page = item.dataset.page;
+      if (page === 'home') switchPage('home');
+      else if (page === 'whatsapp') switchPage('whatsapp');
+      else if (page === 'telegram') switchPage('telegram');
+    });
+  });
+
+  // ========== PRODUCT DATA ==========
+  const rawProducts = [
+    "AIMLOCK 40% : 10K","AIMLOCK 45% : 15K","AIMLOCK 50% : 20K","AIMLOCK 65% : 25K","AIMLOCK 80% : 35K","AIMLOCK 90% : 50K",
+    "HEADLOCK 40% : 10K","HEADLOCK 45% : 15K","HEADLOCK 50% : 20K","HEADLOCK 65% : 25K","HEADLOCK 80% : 35K","HEADLOCK 90% : 50K",
+    "LOCK HEAD 99% : 129K","DRAG HS 40% : 10K","DRAG HS 45% : 15K","DRAG HS 55% : 20K","DRAG HS 65% : 25K","DRAG HS 80% : 35K","DRAG HS 90% : 50K",
+    "EASY DRAG 40% : 10K","EASY DRAG 45% : 15K","EASY DRAG 55% : 20K","EASY DRAG 65% : 25K","EASY DRAG 80% : 35K","EASY DRAG 90% : 50K",
+    "BADAN HS ALL ANDRO : 40K","SET ANDRO VIP : 30K","BADAN HS IOS : 70k","LEHER HS IOS : 70k","HEADLOCK 50% : 55k","HEADLOCK 70% : 75k",
+    "HEADLOCK 80% : 85k","HEADLOCK 90% : 95k","DRAG HS IOS 50% : 50K","DRAG HS IOS 65% : 65k","DRAG HS IOS 80% : 80K","DRAG HS IOS 90% : 90K",
+    "SET IP VIP : 50K","HOLOGRAM SENJATA (ANDRO) : 15k","HOLOGRAM 3D (ANDRO) : 20K","HOLOGRAM SENJATA (IOS) : 30K","HOLOGRAM 3D (IOS) : 35K",
+    "GLOWAL MINI : 10K","GLOWAL GEPENG : 15K","GRAFIK MC : 10K"
+  ];
+
+  function parseProduct(str) {
+    let idx = str.lastIndexOf(":");
+    let name = str.substring(0, idx).trim();
+    let priceRaw = str.substring(idx+1).trim().toLowerCase().replace(/k/g, "000");
+    let priceNum = parseInt(priceRaw.replace(/[^0-9]/g, ""));
+    let priceFormatted = "Rp " + (priceNum || 0).toLocaleString("id-ID");
+    return { name, priceNum: priceNum || 0, priceFormatted };
+  }
+
+  const allProducts = rawProducts.map(p => parseProduct(p));
+  const categories = {
+    "ANDROID": allProducts.slice(0,27),
+    "IPHONE IOS": allProducts.slice(27,38),
+    "HOLOGRAM": allProducts.slice(38,42),
+    "GLOWAL": allProducts.slice(42,44),
+    "GRAPHICS MC": allProducts.slice(44,45)
+  };
+
+  // Rating System
+  let ratingsData = JSON.parse(localStorage.getItem("productRatings")) || {};
+  const dummyRatings = {
+    "AIMLOCK 50%": { avg: 4.9, total: 54, reviews: [{ name: "BUYER ZAANCITER", stars: 5, text: "Aimlock 50% really changed my game!", date: "2026-04-06" }] },
+    "AIMLOCK 90%": { avg: 4.8, total: 32, reviews: [{ name: "BUYER ZAANCITER", stars: 5, text: "90% is insane!", date: "2026-04-05" }] }
+  };
+  for (let [k,v] of Object.entries(dummyRatings)) if (!ratingsData[k]) ratingsData[k] = v;
+  localStorage.setItem("productRatings", JSON.stringify(ratingsData));
+
+  function getProductRating(name) { return ratingsData[name] || { avg: 0, total: 0, reviews: [] }; }
+  function renderStars(avg) { let s = "★".repeat(Math.floor(avg)) + (avg%1>=0.5?"½":"") + "☆".repeat(5-Math.ceil(avg)); return s; }
+
+  function renderShop() {
+    const root = document.getElementById("productListRoot");
+    if (!root) return;
+    root.innerHTML = "";
+    for (let [catName, items] of Object.entries(categories)) {
+      if (!items.length) continue;
+      const catDiv = document.createElement("div");
+      catDiv.className = "category-premium";
+      catDiv.innerHTML = `<div class="category-title"><i class="fas fa-layer-group"></i> ${catName}</div><div class="product-grid-premium"></div>`;
+      root.appendChild(catDiv);
+      const grid = catDiv.querySelector(".product-grid-premium");
+      items.forEach(prod => {
+        const rating = getProductRating(prod.name);
+        const card = document.createElement("div");
+        card.className = "product-card-premium";
+        card.innerHTML = `
+          <div class="product-badge-premium"><i class="fas fa-microchip"></i> ${prod.name.includes("IOS") ? "iOS" : "Android"}</div>
+          <div class="product-name-premium">${prod.name}</div>
+          <div class="product-price-premium">${prod.priceFormatted}</div>
+          <div class="rating-premium"><i class="fas fa-star"></i> ${renderStars(rating.avg)} (${rating.total})</div>
+        `;
+        card.onclick = () => openOrderModal(prod);
+        grid.appendChild(card);
+      });
+    }
+  }
+
+  // Order & Rating logic (sederhana, sama seperti sebelumnya)
+  let selectedProduct = null, selectedImageFile = null;
+  const modalOrder = document.getElementById("orderModal");
+  const modalRating = document.getElementById("ratingModal");
+  let pendingRatingProduct = null, currentRating = 0;
+
+  function openOrderModal(product) {
+    selectedProduct = product;
+    document.getElementById("modalProductName").innerText = product.name;
+    document.getElementById("modalProductPrice").innerText = product.priceFormatted;
+    modalOrder.style.display = "flex";
+  }
+
+  document.querySelector(".close-modal")?.addEventListener("click", () => modalOrder.style.display = "none");
+  document.getElementById("uploadArea")?.addEventListener("click", () => document.getElementById("proofImage").click());
+  document.getElementById("proofImage")?.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      selectedImageFile = file;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        document.getElementById("previewImg").src = ev.target.result;
+        document.getElementById("previewContainer").style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.querySelectorAll('.payment-chip').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.payment-chip').forEach(o => o.style.background = "rgba(255,255,255,0.05)");
+      opt.style.background = "#a855f7";
+      document.getElementById("nomorDisplay").innerHTML = `${opt.dataset.method}: 082392368932`;
+    });
+  });
+
+  const BOT_TOKEN = "8186605145:AAH4nAskT_3TbCjYP_WC2I6ZcLspEAJmnTM";
+  const CHAT_ID = "7491173075";
+
+  document.getElementById("sendOrderBtn")?.addEventListener("click", async () => {
+    const tiktok = document.getElementById("tiktokName").value.trim();
+    const wa = document.getElementById("waNumber").value.trim();
+    const email = document.getElementById("emailBuyer").value.trim();
+    if (!tiktok || !wa || !email) return alert("Isi semua data!");
+    if (!selectedImageFile) return alert("Upload bukti bayar!");
+    const formData = new FormData();
+    formData.append("chat_id", CHAT_ID);
+    formData.append("photo", selectedImageFile, "bukti.jpg");
+    formData.append("caption", `ORDER MASUK\nTikTok: ${tiktok}\nWA: ${wa}\nEmail: ${email}\nProduk: ${selectedProduct.name}\nHarga: ${selectedProduct.priceFormatted}`);
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: "POST", body: formData });
+    if ((await res.json()).ok) {
+      alert("Order terkirim!");
+      modalOrder.style.display = "none";
+      pendingRatingProduct = selectedProduct;
+      document.getElementById("ratingProductName").innerText = selectedProduct.name;
+      modalRating.style.display = "flex";
+    }
+  });
+
+  document.querySelector(".close-rating-modal")?.addEventListener("click", () => modalRating.style.display = "none");
+  document.getElementById("submitRatingBtn")?.addEventListener("click", () => {
+    if (!pendingRatingProduct) return;
+    const text = document.getElementById("reviewText").value.trim();
+    if (!text) return alert("Tulis review!");
+    const name = document.getElementById("reviewerName").value.trim() || "BUYER ZAANCITER";
+    if (!ratingsData[pendingRatingProduct.name]) ratingsData[pendingRatingProduct.name] = { reviews: [], avg: 0, total: 0 };
+    ratingsData[pendingRatingProduct.name].reviews.unshift({ name, stars: currentRating || 5, text, date: new Date().toISOString().slice(0,10) });
+    let total = 0;
+    ratingsData[pendingRatingProduct.name].reviews.forEach(r => total += r.stars);
+    ratingsData[pendingRatingProduct.name].avg = total / ratingsData[pendingRatingProduct.name].reviews.length;
+    ratingsData[pendingRatingProduct.name].total = ratingsData[pendingRatingProduct.name].reviews.length;
+    localStorage.setItem("productRatings", JSON.stringify(ratingsData));
+    alert("Rating terkirim!");
+    modalRating.style.display = "none";
+    renderShop();
+  });
+
+  renderShop();
+</script>
+</body>
+</html>
